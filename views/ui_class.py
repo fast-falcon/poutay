@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from core.signals import MetaSignals
-from conf.settings import FONT_PATH, QSS_PATH
+from conf import settings
 from action.base import ActionBase
 import assets_rc
 
@@ -132,7 +132,7 @@ class UIMain(metaclass=UIMainMeta):
 
         from PySide6.QtCore import QTextStream
 
-        file = QFile(QSS_PATH)
+        file = QFile(settings.QSS_PATH)
         if file.open(QFile.ReadOnly | QFile.Text):
             stream = QTextStream(file)
             qss = stream.readAll()
@@ -148,7 +148,7 @@ class UIMain(metaclass=UIMainMeta):
         self.setup()
 
     def setup(self):
-        self.set_font(FONT_PATH, size=12)
+        self.set_font(settings.FONT_PATH, size=12)
 
     def run(self):
         sys.exit(self.app.exec())

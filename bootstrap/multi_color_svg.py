@@ -1,9 +1,10 @@
-from conf.settings import (
-    QRC_FILE,          # مسیر فایل qrc اصلی
-    QRC_FILE_FULL,     # مسیر فایل qrc کامل و ساخته شده (خروجی)
-    COMPILED_QRC_PY,   # مسیر فایل پایتون ساخته شده از qrc
-    PYSIDE6_RCC_PATH,  # مسیر ابزار pyside6-rcc برای کامپایل qrc
-)
+from pathlib import Path
+import subprocess
+import xml.etree.ElementTree as ET
+from xml.dom import minidom
+from bs4 import BeautifulSoup
+
+from conf import settings
 
 
 class SvgColorBuilder:
@@ -11,7 +12,7 @@ class SvgColorBuilder:
         self.colors = colors
         self.output_svg_dirs = output_svg_dirs
         # مسیر فایل اصلی qrc
-        self.qrc_path = Path(QRC_FILE)
+        self.qrc_path = Path(settings.QRC_FILE)
         # دایرکتوری فایل qrc (برای محاسبه مسیرهای نسبی)
         self.qrc_dir = self.qrc_path.parent
         # دایرکتوری برای ذخیره svg های رنگی (اگر وجود نداشت ایجاد می‌شود)
@@ -19,9 +20,9 @@ class SvgColorBuilder:
         self.svg_colors_dir.mkdir(parents=True, exist_ok=True)
 
         # مسیر فایل qrc کامل که ساخته می‌شود
-        self.qrc_full_path = Path(QRC_FILE_FULL)
+        self.qrc_full_path = Path(settings.QRC_FILE_FULL)
         # مسیر فایل پایتون خروجی qrc
-        self.compiled_qrc_py = Path(COMPILED_QRC_PY)
+        self.compiled_qrc_py = Path(settings.COMPILED_QRC_PY)
 
     def build(self):
         # خواندن محتوای فایل qrc اصلی به صورت متن
@@ -99,7 +100,7 @@ class SvgColorBuilder:
         print("[+] Compiling QRC → Python ...")
         # اجرای دستور کامپایل qrc به فایل پایتون
         subprocess.run(
-            [PYSIDE6_RCC_PATH, str(self.qrc_full_path), "-o", str(self.compiled_qrc_py)],
+            [settings.PYSIDE6_RCC_PATH, str(self.qrc_full_path), "-o", str(self.compiled_qrc_py)],
             check=True,
         )
         print(f"✅ Compiled: {self.compiled_qrc_py}")
