@@ -37,7 +37,6 @@ class ActionBase(metaclass=ActionMeta):
     invoked with ``self`` (the action instance) and ``ui`` (the UI instance).
     """
 
-    actions = {}
     validator_cls = ValidationBase
 
     def __init__(self):
