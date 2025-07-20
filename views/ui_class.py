@@ -110,7 +110,11 @@ class UIMainMeta(type):
         def wrap(cls):
             logging.info("Executing action handler: %s", func.__name__)
             ui = cls.instance()
-            getattr(action_instance, func.__name__)(ui)
+            valid = True
+            if hasattr(action_instance, "validate"):
+                valid = action_instance.validate(func.__name__, ui)
+            if valid:
+                getattr(action_instance, func.__name__)(ui)
 
         return wrap
 
