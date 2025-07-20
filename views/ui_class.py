@@ -5,7 +5,7 @@ from PySide6.QtWidgets import QApplication, QWidget
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from core.signals import MetaSignals
-from settings import FONT_PATH, QSS_PATH
+from conf.settings import FONT_PATH, QSS_PATH
 from action.base import ActionBase
 import assets_rc
 
