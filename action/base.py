@@ -1,3 +1,6 @@
+from .validation import ValidationBase
+
+
 class ActionMeta(type):
     """Collects action handlers defined on subclasses.
 
@@ -34,4 +37,16 @@ class ActionBase(metaclass=ActionMeta):
     invoked with ``self`` (the action instance) and ``ui`` (the UI instance).
     """
 
-    actions = {}
+    validator_cls = ValidationBase
+
+    def __init__(self):
+        self.validator = self.validator_cls()
+
+    @property
+    def cleaned_data(self):
+        return getattr(self.validator, "cleaned_data", {})
+
+    def validate(self, func_name, ui):
+        if self.validator:
+            return self.validator.is_valid(func_name, ui)
+        return True
