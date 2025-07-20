@@ -6,6 +6,7 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from core.signals import MetaSignals
 from settings import FONT_PATH, QSS_PATH
+from action.base import ActionBase
 import assets_rc
 
 
@@ -48,11 +49,10 @@ class UIMainMeta(type):
         new_cls.widget.meta_signals = MetaSignals(new_cls.widget)
         logging.info("MetaSignals attached to widget.")
 
-        for a_name, val in attrs.items():
-            if a_name.endswith("_actions") and isinstance(val, dict):
-                new_cls.actions.update(val)
+        new_cls.actions_cls = attrs.get("actions_cls", ActionBase)
+        new_cls.action_instance = new_cls.actions_cls()
 
-        for name, (in_event, in_func) in new_cls.actions.items():
+        for name, (in_event, in_func) in new_cls.actions_cls.actions.items():
             logging.info(
                 "Connecting action: widget='%s', event='%s', handler='%s'",
                 name,
@@ -61,7 +61,7 @@ class UIMainMeta(type):
             )
             wid = getattr(new_cls.widget, name)
             event = getattr(wid, in_event)
-            method = UIMainMeta.create_connection_method(in_func)
+            method = UIMainMeta.create_connection_method(in_func, new_cls.action_instance)
             bound_method = types.MethodType(method, new_cls)
             setattr(new_cls, f"func_{name}_{in_event}_handler", bound_method)
             event.connect(getattr(new_cls, f"func_{name}_{in_event}_handler"))
@@ -106,11 +106,11 @@ class UIMainMeta(type):
         return new_cls
 
     @staticmethod
-    def create_connection_method(func):
-        def wrap(self):
-            self.path = "meta"
+    def create_connection_method(func, action_instance):
+        def wrap(cls):
             logging.info("Executing action handler: %s", func.__name__)
-            func(self)
+            ui = cls.instance()
+            getattr(action_instance, func.__name__)(ui)
 
         return wrap
 
@@ -119,7 +119,7 @@ class UIMain(metaclass=UIMainMeta):
     """Base class that handles theme and font loading."""
 
     widget_file = None
-    actions = {}
+    actions_cls = ActionBase
     sub_widget_files = {}
 
     def __init__(self):
