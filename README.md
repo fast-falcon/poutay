@@ -19,9 +19,13 @@ pip install -r requirements.txt
 
 ## Usage
 
-Run the CLI directly:
+Run the CLI directly using the module or script:
 
 ```bash
+# Via module execution
+python -m poutay --help
+
+# Or via the script
 python poutay.py run
 ```
 
