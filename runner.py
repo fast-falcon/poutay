@@ -1,7 +1,7 @@
 """Application runner used by the CLI."""
 
 import importlib
-from conf import settings
+from poutay.conf import settings
 
 
 def run():

@@ -6,7 +6,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
-from conf import settings
+from poutay.conf import settings
 import runner
 
 TEMPLATES_DIR = Path(__file__).parent / "templates"
