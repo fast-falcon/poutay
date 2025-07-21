@@ -7,6 +7,13 @@ generate colored SVG assets.
 ## Installation
 
 ```bash
+python setup.py sdist
+pip install dist/poutay-0.1.0.tar.gz
+```
+
+Install dependencies directly if you only want to run the code in place:
+
+```bash
 pip install -r requirements.txt
 ```
 
