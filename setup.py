@@ -6,6 +6,7 @@ setup(
     packages=find_packages(),
     py_modules=["poutay", "runner"],
     include_package_data=True,
+    package_data={"": ["templates/*", "templates/*/*", "templates/*/*/*"]},
     install_requires=[
         "PySide6",
         "cryptography",
