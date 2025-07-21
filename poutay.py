@@ -73,6 +73,8 @@ class StartProjectCommand(CommandBase):
 
     def run(self, args: argparse.Namespace) -> None:
         project_dir = Path(args.name)
+        if not os.path.exists(project_dir):
+            os.makedirs(project_dir, exist_ok=True)
         template = TEMPLATES_DIR / "project"
         copytree(template, project_dir)
         print(f"Project created at {project_dir}")
@@ -88,6 +90,8 @@ class StartAppCommand(CommandBase):
 
     def run(self, args: argparse.Namespace) -> None:
         app_dir = Path(args.name)
+        if not os.path.exists(app_dir):
+            os.makedirs(app_dir, exist_ok=True)
         template = TEMPLATES_DIR / "app"
         copytree(template, app_dir)
         print(f"App created at {app_dir}")
