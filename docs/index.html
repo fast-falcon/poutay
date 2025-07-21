@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poutay Documentation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2em; line-height: 1.6; }
+        pre { background-color: #f4f4f4; padding: 1em; }
+        code { color: #d6336c; }
+    </style>
+</head>
+<body>
+<h1>Poutay Framework</h1>
+<p>Poutay is a lightweight desktop framework inspired by Django. It provides a simple command line interface for creating desktop applications based on PySide6.</p>
+
+<h2>Installation</h2>
+<p>Install Poutay from the source tree so that the tests run against your local code.</p>
+<pre><code>python setup.py sdist
+pip install dist/poutay-0.1.0.tar.gz</code></pre>
+<p>You can also install the dependencies directly:</p>
+<pre><code>pip install -r requirements.txt</code></pre>
+
+<h2>Usage</h2>
+<p>Invoke the CLI:</p>
+<pre><code>python poutay.py run</code></pre>
+
+<p>Available commands:</p>
+<ul>
+<li><code>run</code> &ndash; start the application defined in your settings.</li>
+<li><code>build</code> &ndash; create a standalone executable using PyInstaller.</li>
+<li><code>startproject NAME</code> &ndash; generate a new project skeleton.</li>
+<li><code>startapp NAME</code> &ndash; create a new application skeleton.</li>
+<li><code>createsvgcolors</code> &ndash; build colored SVG resources.</li>
+<li><code>designer [UI_FILE]</code> &ndash; open Qt Designer for rapid UI creation.</li>
+</ul>
+
+<h2>Basic Example</h2>
+<pre><code>from views.ui_class import UIMain
+
+class MainWindow(UIMain):
+    widget_file = "ui/main.ui"
+
+if __name__ == "__main__":
+    MainWindow.show()
+    MainWindow().run()
+</code></pre>
+
+<p>Launch Qt Designer to create UI files:</p>
+<pre><code>python poutay.py designer ui/main.ui</code></pre>
+
+</body>
+</html>
