@@ -1,6 +1,6 @@
 """Sample action showing usage."""
 
-from action.base import ActionBase
+from poutay.action.base import ActionBase
 
 class ExampleActions(ActionBase):
     def on_button_clicked(self, ui):

@@ -9,7 +9,7 @@ from pathlib import Path
 from poutay.conf import settings
 import runner
 
-TEMPLATES_DIR = Path(__file__).parent / "templates"
+TEMPLATES_DIR = Path(__file__).parent / "poutay" / "templates"
 
 
 class CommandBase:
@@ -76,6 +76,8 @@ class StartProjectCommand(CommandBase):
         if not os.path.exists(project_dir):
             os.makedirs(project_dir, exist_ok=True)
         template = TEMPLATES_DIR / "project"
+        print(template)
+        print(project_dir)
         copytree(template, project_dir)
         print(f"Project created at {project_dir}")
 

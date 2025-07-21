@@ -1,3 +1,3 @@
 """App level settings."""
 
-from conf.global_settings import *
+from poutay.conf.global_settings import *

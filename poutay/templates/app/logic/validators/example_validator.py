@@ -1,6 +1,6 @@
 """Sample validator."""
 
-from action.validation import ValidationBase
+from poutay.action.validation import ValidationBase
 
 class ExampleValidator(ValidationBase):
     pass
